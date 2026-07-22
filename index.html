@@ -279,7 +279,7 @@
     <div class="error-msg" id="tglError">Tanggal lahir tidak sesuai dengan data siswa terkait. Silakan periksa kembali.</div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="goStep(1)">Kembali</button>
-      <button class="btn btn-primary" onclick="checkTanggalLahir()">Tampilkan Ijazah</button>
+      <button class="btn btn-primary" onclick="checkTanggalLahir()">Tampilkan Ijazah &amp; Transkrip Nilai</button>
     </div>
   </div>
 
@@ -505,7 +505,14 @@
   function checkTanggalLahir(){
     const val = document.getElementById('tglLahirInput').value; // format YYYY-MM-DD dari input type=date
     const err = document.getElementById('tglError');
+
+    if(currentStudent && !currentStudent.tglLahir){
+      err.textContent = 'Data tanggal lahir untuk siswa ini belum diisi pada Google Sheets. Hubungi admin sekolah untuk melengkapi kolom "Tanggal lahir".';
+      err.classList.add('show');
+      return;
+    }
     if(!currentStudent || !val || val !== currentStudent.tglLahir){
+      err.textContent = 'Tanggal lahir tidak sesuai dengan data siswa terkait. Silakan periksa kembali.';
       err.classList.add('show');
       return;
     }
